@@ -22,8 +22,12 @@ const userModel = mongoose.Schema({
 
 }, {timestamps: true})
 
+userModel.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password)
+}
+
 userModel.pre('save', async function (next) {
-    if (!this.modified) {
+    if (!this.isModified) {
         next()
     }
     const salted = await bcrypt.genSaltSync(10)
