@@ -15,6 +15,7 @@ function Registration() {
     const history = useHistory()
 
     const handleClick = () => setShow(!show)
+    
     const postDetails = (pics) => {
         setLoading(true)
         if (pics === undefined) {
