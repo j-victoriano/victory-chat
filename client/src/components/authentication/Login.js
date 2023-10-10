@@ -86,7 +86,7 @@ function Login() {
                 style={{ marginTop: 15 }}
                 onClick={()=> {
                     setEmail("guest@example.com")
-                    setPassword("password")
+                    setPassword("123456")
                 }}
             >Continue as a Guest</Button>
         </VStack>

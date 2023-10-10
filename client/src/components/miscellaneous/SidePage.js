@@ -11,18 +11,33 @@ import {
     Avatar,
     AvatarBadge,
     AvatarGroup,
+    useToast
 } from '@chakra-ui/react'
 import { SearchIcon, ChatIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { ChatState } from '../../Context/ChatProvider'
 import ProfileModal from './ProfileModal'
+import { useHistory } from 'react-router-dom'
 
 const SidePage = () => {
+    const toast = useToast()
+    const history = useHistory()
     const [search, setSearch] = useState("")
     const [searchResult, setSearchResult] = useState([])
     const [loading, setLoading] = useState(false)
     const [loadingChat, setLoadingChat] = useState()
 
     const { user } = ChatState()
+
+    const logoutHandler = () => {
+        localStorage.removeItem("userInfo")
+        // toast({
+        //     title: "Logged out!",
+        //     status:"success",
+        //     duration: 4000,
+        //     isClosable:"true"
+        // })
+        history.push("/")
+    }
 
     return (
         <Box
@@ -57,7 +72,7 @@ const SidePage = () => {
                             <MenuItem>My Profile</MenuItem>
                         </ProfileModal>
                         <MenuDivider />
-                        <MenuItem>Logout</MenuItem>
+                        <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                     </MenuList>
                 </Menu>
             </div>
