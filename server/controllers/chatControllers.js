@@ -144,7 +144,7 @@ const addToChat = asyncHandler(async (req, res) => {
 
 const removeFromChat = asyncHandler(async (req, res) => {
     const {chatId, userId} = req.body
-    const removed = await Chat.findByIdAndUpdate(
+    const removed = await  Chat.findByIdAndUpdate(
         chatId,
         {
             $pull: { users: userId }
