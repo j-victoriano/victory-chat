@@ -50,11 +50,11 @@ const accessChat = asyncHandler(async (req, res) => {
 
 const fetchChats = asyncHandler(async (req, res) => {
     try {
-        Chat.find({users: {$elemMatch:{$eq: req.user._id}}})
+        Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
             .populate("users", "-password")
             .populate("groupAdmin", "-password")
             .populate("latestMessage")
-            .sort({updatedAt: -1})
+            .sort({ updatedAt: -1 })
             .then(async (results) => {
                 results = await User.populate(results, {
                     path: "latestMessage.sender",
@@ -69,14 +69,14 @@ const fetchChats = asyncHandler(async (req, res) => {
 })
 
 const createGroupChat = asyncHandler(async (req, res) => {
-    if(!req.body.users || !req.body.name) {
-        return res.status(400).send({message: "Please enter all fields"})
+    if (!req.body.users || !req.body.name) {
+        return res.status(400).send({ message: "Please enter all fields" })
     }
 
     let users = JSON.parse(req.body.users)
 
     if (users.length > 2) {
-        return res.status(400).send({message: "2 or more users are required to create a group chat"})
+        return res.status(400).send({ message: "2 or more users are required to create a group chat" })
     }
 
     users.push(req.user)
@@ -88,14 +88,35 @@ const createGroupChat = asyncHandler(async (req, res) => {
             groupAdmin: req.user
         })
 
-        const fullGroupChat = await Chat.findOne({_id: groupChat._id})
+        const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
             .populate("users", "-password")
             .populate("groupAdmin", "-password")
-            res.status(200).json(fullGroupChat)
+        res.status(200).json(fullGroupChat)
     } catch (error) {
         res.status(400)
         throw new Error(error.message)
     }
 })
 
-module.exports = { accessChat, fetchChats, createGroupChat}
+const renameChat = asyncHandler(async (req, res) => {
+    const { chatId, chatName } = req.body
+    const updatedChat = await Chat.findByIdAndUpdate(
+        chatId,
+        {
+            chatName
+        },
+        {
+            new: true
+        }
+    )
+        .populate("users", "-password")
+        .populate("groupAdmin", "-password")
+
+    if (!updatedChat) {
+        res.status(404)
+        throw new Error("Chat not Found")
+    } else {
+        res.json(updatedChat)
+    }
+})
+module.exports = { accessChat, fetchChats, createGroupChat, renameChat }
