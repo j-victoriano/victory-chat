@@ -14,7 +14,8 @@ import {
     AvatarGroup,
     useToast,
     useDisclosure,
-    Input
+    Input,
+    Spinner
 } from '@chakra-ui/react'
 import {
     Drawer,
@@ -42,7 +43,7 @@ const SidePage = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
 
-    const { user } = ChatState()
+    const { user, setSelectedChat, chats, setChats } = ChatState()
 
     const handleSearch = async () => {
         if (!search) {
@@ -80,8 +81,33 @@ const SidePage = () => {
         }
     }
 
-    const accessChat = (userId) => {
+    const accessChat = async (userId) => {
+        try {
+            setLoadingChat(true)
 
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${user.token}`
+                }
+            }
+            const { data } = await axios.post('/api/chat', { userId }, config)
+
+            if (!chats.find((c) => c.id === data.id))
+                setChats([data, ...chats])    
+            setSelectedChat(data)
+            setLoadingChat(false)
+            onClose()
+        } catch (error) {
+            toast({
+                title: "Error Occured!",
+                description: error.message,
+                status: "error",
+                duration: 4000,
+                isClosable: true,
+                position: "top-right"
+            })
+        }
     }
 
     const logoutHandler = () => {
@@ -109,7 +135,7 @@ const SidePage = () => {
                 <Tooltip label="Search for new Chat" placement="bottom-end" hasArrow>
                     <Button variant="ghost" onClick={onOpen}>
                         <i class="fa fa-search" aria-hidden="true"></i>
-                        <Text display={{ base: "none", md: "flex" }} padding="5"> Search for User</Text>
+                        <Text display={{ base: "none", md: "flex" }} padding="5">Search for User</Text>
                     </Button>
                 </Tooltip>
                 <Text fontSize="3xl" fontFamily="Work sans">Victory-Chat</Text>
@@ -160,6 +186,7 @@ const SidePage = () => {
                                 />
                             ))
                         )}
+                        {loadingChat && <Spinner ml="auto" display="flex"/>}
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>
