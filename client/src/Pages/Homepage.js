@@ -25,7 +25,7 @@ const Homepage = () => {
                 borderRadius='lg'
                 borderWidth='1px'
             >
-                <Text fontSize='4xl' fontFamily='Work sans' color='black'>Victori-Chat</Text>
+                <Text fontSize='4xl' fontFamily='Work sans' color='black'>Victory-Chat</Text>
             </Box>
             <Box
                 bg="white"
