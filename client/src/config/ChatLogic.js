@@ -1,3 +1,8 @@
 export const getSender = (loggedUser, users) => {
-    return users[0]._id === loggedUser._id ? users[1].name : users[0].name
+    if (users && users.length >= 2 && loggedUser && loggedUser._id) {
+        return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+    } else {
+        // Handle the case where users or loggedUser is undefined, or the data structure is not as expected.
+        return 'Sender Not Found';
+    }
 }

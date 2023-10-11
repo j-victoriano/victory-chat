@@ -10,13 +10,14 @@ const ChatProvider = ({ children }) => {
     const [chats, setChats] = useState([])
 
     useEffect(() => {
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"))
-        setUser(userInfo)
-
-        if (!userInfo) {
-            history.push('/')
+        const fetchUserData = async () => {
+            const userInfo = await JSON.parse(localStorage.getItem("userInfo"))
+            setUser(userInfo)
+            if (!userInfo) {
+                history.push('/')
+            }
         }
-
+        fetchUserData()
     }, [])
 
     return (

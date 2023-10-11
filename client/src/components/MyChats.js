@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import ChatLoading from './ChatLoading'
+import GroupChatModal from './miscellaneous/GroupChatModal'
 import { getSender } from '../config/ChatLogic'
 import { useToast, Box, Button, Stack, Text } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { ChatState } from '../Context/ChatProvider'
 
 const MyChats = () => {
-    const [loggedUser, setLoggedUser] = useState()
+    const [loggedUser, setLoggedUser] = useState('')
     const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState()
 
     const toast = useToast()
@@ -23,6 +24,7 @@ const MyChats = () => {
             const { data } = await axios.get("/api/chat", config)
             console.log(data)
             setChats(data)
+
         } catch (error) {
             toast({
                 title: "Error Occured!",
@@ -61,13 +63,15 @@ const MyChats = () => {
                 justifyContent="space-between"
                 alignItems="center"
             > My Chats
-                <Button
-                    display="flex"
-                    fontSize={{ base: "15px", md: "10px", lg: "15px" }}
-                    rightIcon={<AddIcon />}
-                >
-                    Create a Group Chat
-                </Button>
+                <GroupChatModal>
+                    <Button
+                        display="flex"
+                        fontSize={{ base: "15px", md: "10px", lg: "15px" }}
+                        rightIcon={<AddIcon />}
+                    >
+                        Create a Group Chat
+                    </Button>
+                </GroupChatModal>
             </Box>
             <Box
                 display="flex"
