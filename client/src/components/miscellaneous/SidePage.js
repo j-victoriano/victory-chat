@@ -129,7 +129,7 @@ const SidePage = () => {
                 alignItems="center"
                 bg="white"
                 w="100%"
-                padding="5px 10px"
+                padding="5px 10px 5px 10px"
                 borderWidth="5px"
             >
                 <Tooltip label="Search for new Chat" placement="bottom-end" hasArrow>

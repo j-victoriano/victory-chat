@@ -7,7 +7,7 @@ import { useToast, Box, Button, Stack, Text } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { ChatState } from '../Context/ChatProvider'
 
-const MyChats = () => {
+const MyChats = ({fetchAgain}) => {
     const [loggedUser, setLoggedUser] = useState('')
     const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState()
 
@@ -40,7 +40,7 @@ const MyChats = () => {
     useEffect(() => {
         setLoggedUser(JSON.parse(localStorage.getItem("userInfo")))
         fetchChats()
-    }, [])
+    }, [fetchAgain])
 
     return (
         <Box
