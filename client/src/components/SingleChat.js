@@ -9,7 +9,7 @@ import ProfileModal from './miscellaneous/ProfileModal'
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat } = ChatState()
-    console.log(selectedChat.chatName)
+    // console.log(selectedChat.chatName)
     return (
         <>
             {selectedChat ? (
@@ -30,29 +30,29 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                         />
                         {!selectedChat.isGroupChat ? (
                             <>
-                            {getSender(user, selectedChat.users)}
-                            <ProfileModal user={getSenderFull(user, selectedChat.users)}/>
+                                {getSender(user, selectedChat.users)}
+                                <ProfileModal user={getSenderFull(user, selectedChat.users)} />
                             </>
                         ) : (
                             <>
                                 {selectedChat.chatName.toUpperCase()}
-                                {/* <UpdateGroupChatModal
-                    fetchAgain={fetchAgain}
-                    setFetchAgain={setFetchAgain}
-                    /> */}
+                                <UpdateGroupChatModal
+                                    fetchAgain={fetchAgain}
+                                    setFetchAgain={setFetchAgain}
+                                />
                             </>
                         )}
                     </Text>
                     <Box
-                    display="flex"
-                    flexDir="column"
-                    justify-content="flex-end"
-                    backgroundColor="gray.200"
-                    p={4}
-                    w="100%"
-                    h="100%"
-                    borderRadius={"lg"}
-                    overflowY="hidden"
+                        display="flex"
+                        flexDir="column"
+                        justify-content="flex-end"
+                        backgroundColor="gray.200"
+                        p={4}
+                        w="100%"
+                        h="100%"
+                        borderRadius={"lg"}
+                        overflowY="hidden"
                     >
                         {/* Messages Here */}
                     </Box>

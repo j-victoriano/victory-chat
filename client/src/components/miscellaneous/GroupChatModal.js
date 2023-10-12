@@ -7,8 +7,7 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Button, IconButton, Icon, Image,
-    Text,
+    Button, 
     useToast,
     FormControl,
     Input, Box
@@ -43,7 +42,7 @@ const GroupChatModal = ({ children }) => {
                 }
             }
             const { data } = await axios.get(`/api/user?search=${search}`, config)
-            console.log(data)
+            // console.log(data)
             setLoading(false)
             setSearchResult(data)
 
@@ -79,13 +78,16 @@ const GroupChatModal = ({ children }) => {
                 }
             }
 
-            const { data } = await axios.post('/api/chat/group', {
+            const requestData = {
                 name: groupChatName,
                 users: JSON.stringify(selectedUsers.map((u) => u._id))
-            }, config)
+            }
+
+            const { data } = await axios.post('/api/chat/group', requestData, config)
 
             setChats([data, ...chats])
             onClose()
+
             toast({
                 title: "New Group Chat Created!",
                 status: "success",
@@ -94,9 +96,12 @@ const GroupChatModal = ({ children }) => {
                 position: "bottom",
             })
         } catch (error) {
+            let errorMessage = "Unable to create Chat"
+            if (error.response && error.response.data) {
+                errorMessage = error.response.data
+            }
             toast({
-                title: "Unable to Create Chat",
-                description: error.response.data ,
+                title: errorMessage,
                 status: "warning",
                 duration: 4000,
                 isClosable: true,

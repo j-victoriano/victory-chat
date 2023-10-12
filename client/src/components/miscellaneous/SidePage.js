@@ -43,7 +43,7 @@ const SidePage = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef()
 
-    const { user, setSelectedChat, chats, setChats } = ChatState()
+    const { user, setSelectedChat, chats, setChats, setUser } = ChatState()
 
     const handleSearch = async () => {
         if (!search) {
