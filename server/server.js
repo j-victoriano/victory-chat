@@ -64,4 +64,9 @@ io.on("connection", (socket) => {
             socket.in(user._id).emit("message received", newChatRecieved)
         })
     })
+
+    socket.off("setup", ()=> {
+        console.log("User has disconnected")
+        socket,leave(userData._id)
+    })
 })

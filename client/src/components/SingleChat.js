@@ -16,7 +16,7 @@ const ENDPOINT = 'http://localhost:5000'
 let socket, selectedChatCompare
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-    const { user, selectedChat, setSelectedChat } = ChatState()
+    const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState()
     const [messages, setMessages] = useState([])
     const [loading, setLoading] = useState(false)
     const [newMessage, setNewMessage] = useState()
@@ -80,7 +80,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
             const { data } = await axios.get(`/api/message/${selectedChat._id}`, config)
 
-            console.log(data)
+            // console.log(data)
             setMessages(data)
             setLoading(false)
             socket.emit("join chat", selectedChat._id)
@@ -101,6 +101,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
         selectedChatCompare = selectedChat
     }, [selectedChat])
+    console.log(notification, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
     const typeHandler = (e) => {
         setNewMessage(e.target.value)
@@ -111,7 +112,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             socket.emit("typing", selectedChat._id)
         }
         let lastTyping = new Date().getTime()
-        let timer = 2000
+        let timer = 3000
         setTimeout(() => {
             let timeNow = new Date().getTime()
             let timeDifference = timeNow - lastTyping
@@ -133,7 +134,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     useEffect(() => {
         socket.on("message received", (newChatRecieved) => {
             if (!selectedChatCompare || selectedChatCompare._id !== newChatRecieved.chat._id) {
-
+                if(!notification.includes(newChatRecieved)) {
+                    setNotification([newChatRecieved, ...notification])
+                    setFetchAgain(!fetchAgain)
+                }
             } else {
                 setMessages([...messages, newChatRecieved])
             }
@@ -211,6 +215,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                     <Lottie
                                         options={defaultOptions}
                                         width={70}
+                                        height={30}
+                                        style={{marginBottom: 15, marginLeft: 0}}
                                     />
                                 </div>
                             ) : (<></>)}
