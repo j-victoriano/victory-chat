@@ -1,17 +1,12 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios'
 import {
-    Box, Tooltip, IconButton, Text, Button, Menu,
+    Box, Tooltip, Text, Button, Menu,
     MenuButton,
     MenuList,
     MenuItem,
-    MenuItemOption,
-    MenuGroup,
-    MenuOptionGroup,
     MenuDivider,
     Avatar,
-    AvatarBadge,
-    AvatarGroup,
     useToast,
     useDisclosure,
     Input,
@@ -20,13 +15,12 @@ import {
 import {
     Drawer,
     DrawerBody,
-    DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
     DrawerContent,
     DrawerCloseButton,
 } from '@chakra-ui/react'
-import { SearchIcon, ChatIcon, ChevronDownIcon } from '@chakra-ui/icons'
+import { ChatIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { ChatState } from '../../Context/ChatProvider'
 import UserListItem from '../User/UserListItem'
 import ProfileModal from './ProfileModal'
@@ -41,7 +35,7 @@ const SidePage = () => {
     const [loading, setLoading] = useState(false)
     const [loadingChat, setLoadingChat] = useState()
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const btnRef = React.useRef()
+    const btnRef = useRef()
 
     const { user, setSelectedChat, chats, setChats, setUser } = ChatState()
 
@@ -94,7 +88,7 @@ const SidePage = () => {
             const { data } = await axios.post('/api/chat', { userId }, config)
 
             if (!chats.find((c) => c.id === data.id))
-                setChats([data, ...chats])    
+                setChats([data, ...chats])
             setSelectedChat(data)
             setLoadingChat(false)
             onClose()
@@ -186,7 +180,7 @@ const SidePage = () => {
                                 />
                             ))
                         )}
-                        {loadingChat && <Spinner ml="auto" display="flex"/>}
+                        {loadingChat && <Spinner ml="auto" display="flex" />}
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>

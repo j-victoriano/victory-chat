@@ -8,7 +8,7 @@ const ChatWindow = ({ fetchAgain, setFetchAgain }) => {
     return (
         <Box
             display={{ base: selectedChat ? "flex" : "none", md: "flex" }}
-            w={{ base: "100%", md: "65%" }}
+            w={{ base: "100%", md: "69%" }}
             alignItems="center"
             flexDir="column"
             borderRadius="lg"
