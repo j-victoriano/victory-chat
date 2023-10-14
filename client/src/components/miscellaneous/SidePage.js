@@ -16,7 +16,6 @@ import {
     Drawer,
     DrawerBody,
     DrawerHeader,
-    DrawerOverlay,
     DrawerContent,
     DrawerCloseButton,
 } from '@chakra-ui/react'
@@ -124,36 +123,40 @@ const SidePage = () => {
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
-                bg="white"
-                w="100%"
-                padding="5px 10px 5px 10px"
+                bg="black"
+                w="auto"
+                padding="10px 20px"
                 borderWidth="5px"
+                borderColor="#696969"
+                borderRadius="xl"
+                ml={1}
+                mr="auto"
             >
                 <Tooltip label="Search for new Chat" placement="bottom-end" hasArrow>
                     <Button variant="ghost" onClick={onOpen}>
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        <Text display={{ base: "none", md: "flex" }} padding="5">Search for User</Text>
+                        <i className="fa fa-search" aria-hidden="true"></i>
+                        <Text display={{ base: "none", md: "flex" }} padding="5" color="#696969">Search for User</Text>
                     </Button>
                 </Tooltip>
-                <Text fontSize="3xl" fontFamily="Work sans">Victory-Chat</Text>
+                <Text fontSize="3xl" fontFamily="Work sans" color="white" fontWeight="bold">Victory-Chat</Text>
                 <div>
-                    <Menu>
+                    <Menu maxW="50px">
                         <MenuButton padding="1">
                             <NotificationBadge
-                            size="small"
-                            effect={Effect.SCALE}
-                            count={notification.length} />
-                            <ChatIcon fontSize="lg" margin="1" />
+                                size="small"
+                                effect={Effect.SCALE}
+                                count={notification.length} />
+                            <ChatIcon fontSize="lg" margin="1" color="white" />
                         </MenuButton>
                         <MenuList pl={2} >
                             {!notification.length && "No new Messages"}
                             {notification.map(notif => (
-                                <MenuItem 
-                                key={notif._id} 
-                                onClick={() => {
-                                    setSelectedChat(notif.chat)
-                                    setNotification(notification.filter((n) => n !== notif))
-                                }}>
+                                <MenuItem
+                                    key={notif._id}
+                                    onClick={() => {
+                                        setSelectedChat(notif.chat)
+                                        setNotification(notification.filter((n) => n !== notif))
+                                    }}>
                                     {notif.chat.isGroupChat ? `New Message from ${notif.chat.chatName}`
                                         : `New Message in ${getSender(user, notif.chat.users)}`}
                                 </MenuItem>
@@ -161,22 +164,28 @@ const SidePage = () => {
                         </MenuList>
                     </Menu>
                     <Menu>
-                        <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                        <MenuButton ml={4} as={Button} rightIcon={<ChevronDownIcon />} backgroundColor="#696969">
                             <Avatar size="sm" cursor="pointer" name={user.name} src={user.pic} />
                         </MenuButton>
-                        <MenuList>
-                            <ProfileModal user={user}>
-                                <MenuItem>My Profile</MenuItem>
+                        <MenuList backgroundColor="#696969" color="white" maxW="20px">
+                            <ProfileModal user={user} >
+                                <MenuItem
+                                    backgroundColor="#696969"
+                                    border="hidden"
+                                >My Profile</MenuItem>
                             </ProfileModal>
                             <MenuDivider />
-                            <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+                            <MenuItem
+                                onClick={logoutHandler}
+                                backgroundColor="#696969"
+                                borderColor="#696969"
+                            >Logout</MenuItem>
                         </MenuList>
                     </Menu>
                 </div>
             </Box>
 
             <Drawer placement="left" isOpen={isOpen} onClose={onClose} finalFocusRef={btnRef}>
-                <DrawerOverlay />
                 <DrawerContent>
                     <DrawerCloseButton />
                     <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>

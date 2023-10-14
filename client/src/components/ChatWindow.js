@@ -13,8 +13,9 @@ const ChatWindow = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             borderRadius="lg"
             borderWidth="1px"
+            borderColor="black"
             padding="5"
-            backgroundColor="white"
+            backgroundColor="black"
         >
             <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
         </Box>

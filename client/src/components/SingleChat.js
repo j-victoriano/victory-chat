@@ -151,9 +151,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             {selectedChat ? (
                 <>
                     <Text
-                        fontSize={"28px"}
+                        fontSize={"25px"}
                         w="100%"
                         display="flex"
+                        color="white"
+                        fontWeight="bold"
                         pb={3}
                         px={3}
                         justifyContent={{ base: "space-between" }}
@@ -167,7 +169,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                         {!selectedChat.isGroupChat ? (
                             <>
                                 {getSender(user, selectedChat.users)}
-                                <ProfileModal user={getSenderFull(user, selectedChat.users)} />
+                                <ProfileModal 
+                                user={getSenderFull(user, selectedChat.users)}
+                                
+                                />
                             </>
                         ) : (
                             <>
@@ -184,7 +189,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                         display="flex"
                         flexDir="column"
                         justifyContent="flex-end"
-                        backgroundColor="gray.200"
+                        backgroundColor="black"
                         p={4}
                         w="100%"
                         h="100%"
@@ -222,9 +227,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                             ) : (<></>)}
                             <Input
                                 placeholder='Send Message Here...'
+                                borderRadius="lg"
+                                borderColor="#696969"
                                 variant="filled"
                                 onChange={typeHandler}
                                 value={newMessage}
+                                color="white"
+                                backgroundColor="black"
                             />
                         </FormControl>
                     </Box>
@@ -236,7 +245,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     justifyContent="center"
                     height="100%"
                 >
-                    <Text fontSize="2xl" pb={3} fontFamily="Work sans">
+                    <Text fontSize="2xl" pb={3} fontFamily="Work sans" color="white" fontWeight="bold">
                         Click on a user to start chatting!
                     </Text>
                 </Box>

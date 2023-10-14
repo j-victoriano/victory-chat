@@ -48,14 +48,17 @@ const MyChats = ({fetchAgain}) => {
             flexDir="column"
             alignItems="center"
             p={3}
-            bg="white"
+            bg="black"
             w={{ base: "100%", md: "30%" }}
             borderRadius="lg"
             borderWidth="1px"
+            borderColor="black"
         >
             <Box
                 pb={3}
                 px={3}
+                color="white"
+                fontWeight="bold"
                 fontSize={{ base: "28px", md: "30px" }}
                 fontFamily="Work sans"
                 display="flex"
@@ -68,6 +71,9 @@ const MyChats = ({fetchAgain}) => {
                         display="flex"
                         fontSize={{ base: "15px", md: "10px", lg: "15px" }}
                         rightIcon={<AddIcon />}
+                        variant="ghost"
+                        color="#696969"
+                        _hover={{ color: "white", borderRadius: "1px", borderColor: "white" }}
                     >
                         Create a Group Chat
                     </Button>
