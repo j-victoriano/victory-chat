@@ -34,7 +34,7 @@ const Homepage = () => {
                 borderRadius="lg"
                 borderWidth="1px"
             >
-                <Tabs variant='soft-rounded' colorScheme='green' textColor="black">
+                <Tabs variant='soft-rounded' colorScheme='gray' textColor="black">
                     <TabList mb="1em">
                         <Tab w="50%">Login</Tab>
                         <Tab w="50%">Registration</Tab>

@@ -186,7 +186,7 @@ const SidePage = () => {
             </Box>
 
             <Drawer placement="left" isOpen={isOpen} onClose={onClose} finalFocusRef={btnRef}>
-                <DrawerContent>
+                <DrawerContent color="white" backgroundColor="black" borderRadius="lg">
                     <DrawerCloseButton />
                     <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
                     <DrawerBody>
