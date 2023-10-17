@@ -101,7 +101,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
         selectedChatCompare = selectedChat
     }, [selectedChat])
-    console.log(notification, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    // console.log(notification, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
     const typeHandler = (e) => {
         setNewMessage(e.target.value)
