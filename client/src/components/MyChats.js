@@ -3,11 +3,11 @@ import axios from 'axios'
 import ChatLoading from './ChatLoading'
 import GroupChatModal from './miscellaneous/GroupChatModal'
 import { getSender } from '../config/ChatLogic'
-import { useToast, Box, Button, Stack, Text } from '@chakra-ui/react'
+import { useToast, Box, Button, Stack, Text, Avatar } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { ChatState } from '../Context/ChatProvider'
 
-const MyChats = ({fetchAgain}) => {
+const MyChats = ({ fetchAgain }) => {
     const [loggedUser, setLoggedUser] = useState('')
     const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState()
 
@@ -94,18 +94,36 @@ const MyChats = ({fetchAgain}) => {
                             <Box
                                 onClick={() => setSelectedChat(chat)}
                                 cursor="pointer"
-                                bg={selectedChat === chat ? "lightblue" : "lightgrey"}
+                                bg={selectedChat === chat ? "lightblue" : "none"}
                                 color={selectedChat === chat ? "white" : "black"}
                                 px={3}
                                 py={2}
                                 borderRadius="lg"
                                 key={chat._id}
                             >
-                                <Text>
-                                    {!chat.isGroupChat ? (
-                                        getSender(loggedUser, chat.users)
-                                    ) : (chat.chatName)}
-                                </Text>
+                                <Box display="flex">
+                                    <Avatar
+                                        mr={2}
+                                        size="xs"
+                                        cursor="pointer"
+                                        src={chat.users.pic}
+                                    />
+                                    <Text
+                                        color="white"
+                                    >
+                                        {!chat.isGroupChat ? (
+                                            getSender(loggedUser, chat.users)
+                                        ) : (chat.chatName)}
+                                    </Text>
+                                </Box>
+                                {chat.latestMessage && (
+                                    <Text fontSize="xs" color="#696969" borderBottom="1px" padding={1}>
+                                        <b>{chat.latestMessage.sender.name} : </b>
+                                        {chat.latestMessage.content.length > 50
+                                            ? chat.latestMessage.content.substring(0, 51) + "..."
+                                            : chat.latestMessage.content}
+                                    </Text>
+                                )}
                             </Box>
                         ))}
                     </Stack>
