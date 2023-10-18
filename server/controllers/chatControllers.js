@@ -163,4 +163,5 @@ const removeFromChat = asyncHandler(async (req, res) => {
         res.json(removed)
     }
 })
+
 module.exports = { accessChat, fetchChats, createGroupChat, renameChat, addToChat, removeFromChat }

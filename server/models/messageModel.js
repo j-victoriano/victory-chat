@@ -12,6 +12,10 @@ const messageModel = mongoose.Schema({
     chat: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chat"
+    },
+    isUnread: {
+        type: Boolean,
+        default: true
     }
 }, {timestamps: true})
 

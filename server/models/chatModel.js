@@ -11,6 +11,7 @@ const chatModel = mongoose.Schema(
         latestMessage: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Message",
+            isUnread: true
         },
         groupAdmin: {
             type:mongoose.Schema.Types.ObjectId,

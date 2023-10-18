@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import ChatLoading from './ChatLoading'
 import GroupChatModal from './miscellaneous/GroupChatModal'
-import { getSender } from '../config/ChatLogic'
+import { getSender, getSenderFull } from '../config/ChatLogic'
 import { useToast, Box, Button, Stack, Text, Avatar } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import { ChatState } from '../Context/ChatProvider'
@@ -12,6 +12,17 @@ const MyChats = ({ fetchAgain }) => {
     const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState()
 
     const toast = useToast()
+
+    const markMessageAsRead = (chatId) => {
+        const updatedChats = chats.map((chat) => {
+            if (chat._id === chatId) {
+                chat.latestMessage.isUnread = false;
+            }
+            // console.log(chat)
+            return chat;
+        });
+        setChats(updatedChats);
+    };
 
     const fetchChats = async () => {
         try {
@@ -41,6 +52,12 @@ const MyChats = ({ fetchAgain }) => {
         setLoggedUser(JSON.parse(localStorage.getItem("userInfo")))
         fetchChats()
     }, [fetchAgain])
+
+    const sortedChats = [...chats].sort((a, b) => {
+        const timestampA = a.latestMessage ? new Date(a.latestMessage.createdAt) : 0;
+        const timestampB = b.latestMessage ? new Date(b.latestMessage.createdAt) : 0;
+        return timestampB - timestampA;
+    });
 
     return (
         <Box
@@ -88,11 +105,14 @@ const MyChats = ({ fetchAgain }) => {
                 borderRadius="lg"
                 overflowY={'hidden'}
             >
-                {chats ? (
+                {sortedChats ? (
                     <Stack overflowY='scroll'>
-                        {chats.map((chat) => (
+                        {sortedChats.map((chat) => (
                             <Box
-                                onClick={() => setSelectedChat(chat)}
+                                onClick={() => {
+                                    markMessageAsRead(chat._id)
+                                    setSelectedChat(chat)
+                                }}
                                 cursor="pointer"
                                 bg={selectedChat === chat ? "lightblue" : "none"}
                                 color={selectedChat === chat ? "white" : "black"}
@@ -102,11 +122,24 @@ const MyChats = ({ fetchAgain }) => {
                                 key={chat._id}
                             >
                                 <Box display="flex">
+                                    {/* {chat.latestMessage && chat.latestMessage.isUnread && (
+                                        <span style={{
+                                            width: '10px',
+                                            height: '10px',
+                                            background: '#4287f5',
+                                            borderRadius: '50%',
+                                            display: 'inline-block',
+                                            marginLeft: '4px',
+                                            alignContent: 'center'
+                                        }}>
+                                        </span>
+                                    )} */}
                                     <Avatar
                                         mr={2}
                                         size="xs"
                                         cursor="pointer"
-                                        src={chat.users.pic}
+                                        name={getSender(loggedUser, chat.users)}
+                                        src={getSenderFull(loggedUser, chat.users).pic}
                                     />
                                     <Text
                                         color="white"

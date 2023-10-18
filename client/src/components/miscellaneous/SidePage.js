@@ -148,7 +148,7 @@ const SidePage = () => {
                                 count={notification.length} />
                             <ChatIcon fontSize="lg" margin="1" color="white" />
                         </MenuButton>
-                        <MenuList pl={2} >
+                        <MenuList pl={2}>
                             {!notification.length && "No new Messages"}
                             {notification.map(notif => (
                                 <MenuItem
@@ -158,7 +158,7 @@ const SidePage = () => {
                                         setNotification(notification.filter((n) => n !== notif))
                                     }}>
                                     {notif.chat.isGroupChat ? `New Message from ${notif.chat.chatName}`
-                                        : `New Message in ${getSender(user, notif.chat.users)}`}
+                                        : `New Message from ${getSender(user, notif.chat.users)}`}
                                 </MenuItem>
                             ))}
                         </MenuList>
